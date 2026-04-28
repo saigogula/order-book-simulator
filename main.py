@@ -1,6 +1,9 @@
 from dataclasses import dataclass
 from collections import deque
 import itertools
+import random
+import matplotlib.pyplot as plt
+
 
 @dataclass
 class Order:
@@ -34,6 +37,7 @@ class OrderBook:
         self.buys = []
         self.sells = []
         self.trades = []
+        self.price_history = []
         self.order_ids = itertools.count(1)
 
     def add_limit_order(self, side, price, quantity):
@@ -104,6 +108,8 @@ class OrderBook:
 
             self.trades.append(trade)
             print(trade)
+
+            self.price_history.append(trade_price)
 
             buy_order.quantity -= trade_quantity 
             best_sell.quantity -= trade_quantity 
@@ -202,6 +208,17 @@ class OrderBook:
 
         print("====================================")
 
+    def plot_price_history(self):
+        if not self.price_history:
+            print("No trades to plot yet.")
+            return
+
+        plt.plot(self.price_history, marker="o")
+        plt.title("Simulated Trade Prices Over Time")
+        plt.xlabel("Trade Number")
+        plt.ylabel("Price")
+        plt.show()
+
 def run_demo():
     book = OrderBook()
 
@@ -221,9 +238,7 @@ def run_demo():
     book.show_book()
     book.show_trades()
 
+    book.plot_price_history()
+
 if __name__ == "__main__":
     run_demo()    
-
-git init
-git add .
-git commit -m "initial commit"
