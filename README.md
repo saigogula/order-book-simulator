@@ -14,5 +14,10 @@ A Python-based trading engine that simulates a limit order book using price-time
 
 ## How It Works
 Orders are matched when:
-- Buy price ≥ Sell price
-- Market orders execute immediately at best available price
+- **Buy orders** are sorted from highest price to lowest price
+- **Sell orders** are sorted from lowest price to highest price
+
+A trade happens when:
+
+```text
+buy price >= sell price
